@@ -11,5 +11,8 @@ WORKDIR Perl-1.0
 RUN ["./Configure", "-d"]
 RUN make 
 
-ENTRYPOINT ["/Perl-1.0/perl"]
+FROM ubuntu:latest as exec-stage
 
+COPY --from=build-stage /Perl-1.0/perl /usr/local/bin/
+
+ENTRYPOINT ["/usr/local/bin/perl"]
